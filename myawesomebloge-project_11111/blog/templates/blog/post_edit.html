@@ -1,0 +1,207 @@
+{% extends "blog/base_template.html" %}
+{% block title %}
+Add Data Page
+{% endblock title %}
+{% load static %}
+
+{% block custom_css %}
+<style media="screen">
+    body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
+
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #082B3E;
+        color: white;
+    }
+
+    .brand-logo {
+        padding-left: 5%;
+        margin: 10px;
+    }
+
+    .navbar-links ul {
+        margin: 0;
+        padding: 0px 100px;
+        display: flex;
+    }
+
+    .navbar-links li {
+        list-style: none;
+        font-family: 'Work Sans', sans-serif;
+    }
+
+    .navbar-links a {
+        text-decoration: none;
+        color: white;
+        padding: 1rem;
+        display: block;
+    }
+
+    .navbar-links li:hover {
+        background-color: #244b61;
+    }
+
+    .toggle-button {
+        position: absolute;
+        top: .7rem;
+        right: 1rem;
+        display: none;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 30px;
+        height: 21px;
+    }
+
+    .toggle-button .bar {
+        height: 3px;
+        width: 100%;
+        background-color: white;
+        border-radius: 10px;
+    }
+
+    @media (max-width:600px) {
+
+        .toggle-button {
+            display: flex;
+        }
+
+        .navbar-links {
+            display: none;
+            width: 100%;
+        }
+
+        .navbar {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .navbar-links ul {
+            width: 100%;
+            flex-direction: column;
+        }
+
+        .navbar-links li {
+            text-align: center;
+        }
+
+        .navbar-links li a {
+            padding: .5rem 1rem;
+        }
+
+        .navbar-links.active {
+            display: flex;
+        }
+
+    }
+    .main_text{
+        color:#FBBC05;
+        text-align: center;
+    }
+    .main_div{
+        display:flex;
+        justify-content: center;
+        align-items:center;
+    }
+    .box{
+        display: flex;
+        border: 1px solid #FBBC05;
+        border-radius: 5px;
+        width: 400px;
+        height: 40px;
+        align-items:center;
+        margin-bottom:10px;
+
+    }
+    .title{
+        margin:0px 10px 0px 5px;
+    }
+    .input{
+        width: 300px;
+        border: none;
+        margin:0px;
+        padding:0px;
+        height: 100%;
+        width: 100%;
+    }
+    .bb{
+        display: flex;
+        justify-content:flex-end;
+    }
+    .answer{
+        background-color: #33A853;
+        color:white;
+        border: none;
+        border-radius: 5px;
+    }
+</style>
+
+{% endblock custom_css %} # монжо не писать, если не нужно
+
+{% block bodydata %}
+<nav class="navbar">
+    <div class="brand-logo">
+        <img src="{% static 'logo.png'%}" alt="logo" height="30px">
+    </div>
+    <a href="#" class="toggle-button">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+    </a>
+    <div class="navbar-links">
+        <ul>
+            <li><a href="{% url 'admin:index' %}">Admin</a></li>
+            <li><a href="{% url 'show_all_data' %}">Admin2</a></li>
+            <li><a href="{% url 'tasks_list_url' %}">Todo</a></li>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="https://www.instagram.com/serikkhanayan/">Instagram</a></li>
+            <li><a href="{% url 'showblog'%}">Blog</a></li>
+        </ul>
+    </div>
+</nav>
+<div class="main_text">
+    <h2>Edit Page</h2>
+</div>
+<div class="main_div">
+    <form action="/add_post" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="box">
+            <label class="title">Title: </label>
+            <input type="text" name="title" class="input" value="{{post.title}}">
+        </div>
+
+        <div class="box">
+            <label class="title">Text: </label>
+            <input type="text" name="text" class="input" value="{{post.text}}">
+        </div>
+        <div class="box">
+            <label class="title">Image: </label>
+            {# <img src="/awesome_media/{{ post.image }}" style="width:240px;height:165px;"> #}
+            <input type="file" name="image" class="input" value="{{post.image}}">
+        </div>
+        <div class="bb">
+            <input type="hidden" name="id" value="{{post.id}}">
+            <input type="submit" name="submit" class="answer" value="Edit Post">
+        </div>
+    </form>
+</div>
+
+{% endblock bodydata %}
+
+{% block custom_js %}
+<script type="text/javascript">
+    const toggleButton = document.getElementsByClassName("toggle-button")[0]
+    const navbarLinks = document.getElementsByClassName("navbar-links")[0]
+    toggleButton.addEventListener('click', () => {
+        navbarLinks.classList.toggle('active')
+    })
+</script>
+{% endblock custom_js %} # монжо не писать, если не нужно

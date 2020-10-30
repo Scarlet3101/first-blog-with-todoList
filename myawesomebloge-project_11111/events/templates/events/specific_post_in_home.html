@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>My awesome blog</title>
+
+
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@200&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #082B3E;
+            color: white;
+        }
+
+        .brand-logo {
+            padding-left: 5%;
+            margin: 10px;
+        }
+
+        .navbar-links ul {
+            margin: 0;
+            padding: 0px 100px;
+            display: flex;
+        }
+
+        .navbar-links li {
+            list-style: none;
+            font-family: 'Work Sans', sans-serif;
+        }
+
+        .navbar-links a {
+            text-decoration: none;
+            color: white;
+            padding: 1rem;
+            display: block;
+        }
+
+        .navbar-links li:hover {
+            background-color: #244b61;
+        }
+
+        .toggle-button {
+            position: absolute;
+            top: .7rem;
+            right: 1rem;
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 21px;
+        }
+
+        .toggle-button .bar {
+            height: 3px;
+            width: 100%;
+            background-color: white;
+            border-radius: 10px;
+        }
+
+        .title {
+            margin-top: 20px;
+            padding-top: 40px;
+            font-size: 40px;
+        }
+
+        .title:hover {
+            color: #082B3E;
+        }
+
+        .image {
+            width: 780px;
+            height: 440px;
+        }
+
+        .text {
+            width: 60%;
+        }
+
+        .date {
+            color: #C8CCCC;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex-grow: 1;
+        }
+
+        footer {
+            padding: 0;
+            margin: 0;
+            background-color: #082B3E;
+            height: 60px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        #teleport {
+            text-decoration: none;
+            color: white;
+            padding: 1rem;
+            display: block;
+        }
+
+
+        @media (max-width:800px) {
+            .image {
+                width: 510px;
+                height: 340px;
+            }
+
+            .title {
+                text-align: center;
+            }
+
+        }
+
+        @media (max-width:600px) {
+            .toggle-button {
+                display: flex;
+            }
+
+            .navbar-links {
+                display: none;
+                width: 100%;
+            }
+
+            .navbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .navbar-links ul {
+                width: 100%;
+                flex-direction: column;
+            }
+
+            .navbar-links li {
+                text-align: center;
+            }
+
+            .navbar-links li a {
+                padding: .5rem 1rem;
+            }
+
+            .navbar-links.active {
+                display: flex;
+            }
+
+            .image {
+                width: 410px;
+                height: 240px;
+            }
+
+            .text {
+                width: 90%;
+            }
+        }
+
+        @media (max-width:400px) {
+            .image {
+                width: 320px;
+                height: 170px;
+            }
+        }
+    </style>
+
+    <link href="album.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="brand-logo">
+            <a href="{% url 'home' %}">
+                <img src="{% static 'logo.png'%}" alt="logo" height="30px">
+            </a>
+        </div>
+        <a href="#" class="toggle-button">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </a>
+        <div class="navbar-links">
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="https://www.instagram.com/serikkhanayan/">Instagram</a></li>
+                <li><a href="{% url 'showblog'%}">Blog</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+
+        <h2 class="title">{{ event.event_text}}</h2>
+        <br>
+        <img src="{{event.event_image.url}}" alt="" height="300px" class="image">
+        <br>
+        <p class="text">{{event.text}}</p>
+        <p class="date">{{event.date_of_post}}</p>
+
+    </main>
+
+    <footer>
+        <a id="teleport" href="#">Back to top</a>
+    </footer>
+
+    <script type="text/javascript">
+        const toggleButton = document.getElementsByClassName("toggle-button")[0]
+        const navbarLinks = document.getElementsByClassName("navbar-links")[0]
+        toggleButton.addEventListener('click', () => {
+            navbarLinks.classList.toggle('active')
+        })
+    </script>
+
+
+</body>
+
+</html>

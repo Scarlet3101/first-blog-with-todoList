@@ -1,0 +1,46 @@
+{% extends 'task/base.html' %}
+
+
+{% block content %}
+
+{% verbatim %}
+
+<div id="app">
+    
+<form @submit.prevent="createTask">
+
+        <div class="input_div">
+
+            <label id="title_text">Create New Task</label>
+            <input  v-model="task" id="input" placeholder="write something for adding the task...">
+            <div class="button_div">
+                <button id ="button">Create</button>
+            </div>
+
+        </div>
+
+</form>
+
+
+    <div class="task_box"
+         v-for="(task, index) in taskList"
+         @click="completeTask(task.id, index)"
+         :class="{'completed': task.completed}">
+        <div class="box">
+            <div class="text_task">
+                {{ task.title }}
+            </div>
+        <div class="qrest">
+            <button type="button"  @click.stop="deleteTask(task.id, index)" id="delete">
+                <span>&times;</span>
+            </button>
+        </div>
+
+        </div>
+    </div>
+
+</div>
+
+{% endverbatim %}
+
+{% endblock %}

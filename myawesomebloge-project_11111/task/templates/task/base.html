@@ -1,0 +1,351 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@200&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js"></script>
+    <title>TODO</title>
+
+    <style media="screen">
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #082B3E;
+            color: white;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #082B3E;
+            color: white;
+        }
+
+        .brand-logo {
+            padding-left: 5%;
+            margin: 10px;
+        }
+
+        .navbar-links ul {
+            margin: 0;
+            padding: 0px 100px;
+            display: flex;
+        }
+
+        .navbar-links li {
+            list-style: none;
+            font-family: 'Work Sans', sans-serif;
+        }
+
+        .navbar-links a {
+            text-decoration: none;
+            color: white;
+            padding: 1rem;
+            display: block;
+        }
+
+        .navbar-links li:hover {
+            background-color: #244b61;
+        }
+
+        .toggle-button {
+            position: absolute;
+            top: .7rem;
+            right: 1rem;
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 21px;
+        }
+
+        .toggle-button .bar {
+            height: 3px;
+            width: 100%;
+            background-color: white;
+            border-radius: 10px;
+        }
+
+        @media (max-width:1120px) {
+            .text-longshadow {
+                font-size: 100px;
+            }
+
+        }
+
+        @media (max-width:600px) {
+
+            .toggle-button {
+                display: flex;
+            }
+
+            .navbar-links {
+                display: none;
+                width: 100%;
+            }
+
+            .navbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .navbar-links ul {
+                width: 100%;
+                flex-direction: column;
+            }
+
+            .navbar-links li {
+                text-align: center;
+            }
+
+            .navbar-links li a {
+                padding: .5rem 1rem;
+            }
+
+            .navbar-links.active {
+                display: flex;
+            }
+
+            #probel {
+                display: block;
+            }
+
+            .picture {
+                width: 250px;
+                height: 160px;
+            }
+
+        }
+
+
+
+
+
+
+        .completed {
+            text-decoration: line-through;
+        }
+
+        .input_div {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 80px;
+        }
+
+        #title_text {
+            text-align: center;
+            font-size: 40px;
+        }
+
+        #input {
+            height: 30px;
+            font-size: 20px;
+        }
+
+        .button_div {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+        }
+
+        #button {
+            width: 100px;
+            border-radius: 5px;
+            background-color: #FBBC05;
+            font-size: 20px;
+        }
+
+        #button:active {
+            background-color: #33A853;
+        }
+
+        .main {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .tasks {
+            width: 500px;
+        }
+
+        .task_box {
+            border: 2px solid #FBBC05;
+            border-radius: 5px;
+            margin-bottom: 5px;
+        }
+
+        .box {
+            height: 50px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .text_task {
+            margin-left: 20px;
+            font-size: 20px;
+        }
+
+        .qrest {
+            margin-right: 20px;
+        }
+
+        #delete {
+            border: 1px solid #CCCCCC;
+            border-radius: 5px;
+        }
+
+        #delete:active {
+            background-color: #EA4336;
+        }
+
+        @media (max-width:600px) {
+            #input {
+                width: 350px;
+            }
+
+            .input_div {
+                align-items: center;
+            }
+
+            .task_box {
+                margin-left: 47px;
+                width: 400px;
+
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="brand-logo">
+            <img src="{% static 'logo.png'%}" alt="logo" height="30px">
+        </div>
+        <a href="#" class="toggle-button">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </a>
+        <div class="navbar-links">
+            <ul>
+                <li><a href="{% url 'admin:index' %}">Admin</a></li>
+                <li><a href="{% url 'tasks_list_url' %}">Todo</a></li>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="https://www.instagram.com/serikkhanayan/">Instagram</a></li>
+                <li><a href="{% url 'showblog'%}">Blog</a></li>
+            </ul>
+        </div>
+    </nav>
+
+
+
+    <div class="main">
+        <div class="tasks">
+            {% block content %}
+
+            {% endblock %}
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        function sendRequest(url, method, data) {
+            var r = axios({
+                method: method,
+                url: url,
+                data: data,
+                xsrfCookieName: 'csrftoken',
+                xsrfHeaderName: 'X-CSRFToken',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            return r
+        }
+
+        var app = new Vue({
+            el: '#app',
+            data: {
+                task: '',
+                tasks: []
+            },
+            created() {
+                var vm = this;
+                var r = sendRequest('', 'get')
+                    .then(function(response) {
+                        vm.tasks = response.data.tasks;
+                    })
+            },
+            computed: {
+                taskList() {
+                    function compare(a, b) {
+                        if (a.completed > b.completed) {
+                            return 1;
+                        }
+                        if (a.completed < b.completed) {
+                            return -1;
+                        }
+                        return 0;
+                    }
+                    return this.tasks.sort(compare)
+                }
+            },
+            methods: {
+                createTask() {
+                    var vm = this;
+                    var formData = new FormData();
+                    formData.append('title', this.task);
+
+                    sendRequest('', 'post', formData)
+                        .then(function(response) {
+                            vm.tasks.push(response.data.task);
+                            vm.task = '';
+                        })
+                },
+                completeTask(id, index) {
+                    var vm = this;
+                    sendRequest('' + id + '/complete/', 'post')
+                        .then(function(response) {
+                            vm.tasks.splice(index, 1);
+                            vm.tasks.push(response.data.task);
+                        })
+                },
+                deleteTask(id, index) {
+                    var vm = this;
+                    sendRequest('' + id + '/delete/', 'post')
+                        .then(function(response) {
+                            vm.tasks.splice(index, 1);
+                        })
+                }
+            }
+        })
+
+        const toggleButton = document.getElementsByClassName("toggle-button")[0]
+        const navbarLinks = document.getElementsByClassName("navbar-links")[0]
+        toggleButton.addEventListener('click', () => {
+            navbarLinks.classList.toggle('active')
+        })
+    </script>
+</body>
+
+</html>
